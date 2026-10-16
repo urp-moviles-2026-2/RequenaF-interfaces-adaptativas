@@ -1,4 +1,11 @@
-import { FlatList, Image, View, Text, StyleSheet } from "react-native";
+import {
+  FlatList,
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
 import Badge from "../components/Badge";
 import { PRODUCTS } from "../data/products";
 import { getColumns, getDeviceClass } from "../utils/breakpoints";
@@ -7,28 +14,31 @@ import { colors, spacing } from "../theme";
 /** Slide 19: galería adaptativa. Un componente, cuatro layouts según el ancho de ventana. */
 export default function GalleryScreen() {
   // TODO (Ejercicio 07, paso 1): obtén width con useWindowDimensions.
-  const width = 360;
+  const width = useWindowDimensions().width;
 
   // TODO (Ejercicio 07, paso 2): columnas con getColumns(width) y ancho de cada celda = width / columns.
-  const columns = 2;
-  const itemWidth = 180;
+  const columns = getColumns(width);
+  const itemWidth = width / columns;
 
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
         <Badge>{columns} columnas</Badge>
         <Badge tone="info">{getDeviceClass(width)}</Badge>
-        <Text style={styles.hint}>{width.toFixed(0)} dp</Text>
+        <Text style={styles.hint}> {width.toFixed(0)}dp</Text>
       </View>
       {/* TODO (Ejercicio 07, paso 3): agrega key={columns} para que FlatList recalcule cuando cambia numColumns */}
       <FlatList
         data={PRODUCTS}
+        key={columns}
         keyExtractor={(p) => p.id}
         numColumns={columns}
         renderItem={({ item }) => (
           <View style={{ width: itemWidth, height: itemWidth, padding: 2 }}>
             <Image source={{ uri: item.uri }} style={styles.image} />
-            <Text style={styles.caption} numberOfLines={1}>{item.name}</Text>
+            <Text style={styles.caption} numberOfLines={1}>
+              {item.name}
+            </Text>
           </View>
         )}
       />

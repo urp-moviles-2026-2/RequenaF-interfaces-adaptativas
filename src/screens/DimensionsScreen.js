@@ -14,6 +14,10 @@ import { colors, spacing } from "../theme";
 // TODO (Ejercicio 01, paso 4): guarda aquí un snapshot con Dimensions.get("window") a nivel de archivo.
 // Es la trampa de la slide 8: se toma UNA vez y no cambia al rotar. Lo vas a comparar con el valor en vivo.
 const SNAPSHOT = Dimensions.get("window");
+//const live = useWindowDimensions();
+//no funciona por su reactividad, necesita vivir dentro de un
+//cuerpo de un componente o de un custom hook, mientras que
+//Dimensions.get("window") es estatico
 
 export default function DimensionsScreen() {
   // TODO (Ejercicio 01, paso 1): obtén window y screen con Dimensions.get(...)
@@ -22,8 +26,8 @@ export default function DimensionsScreen() {
   //  height: Dimensions.get("window").height,
   //};
 
-  const window = Dimensions.get("screen"); //diferenciencia entre window y screen, el windows me da donde yo puedo usar los componentes, mientras que screen me da todo incluyendo la barra de status
-  const screen = { width: 0, height: 0 };
+  const window = Dimensions.get("window"); //diferenciencia entre window y screen, el windows me da donde yo puedo usar los componentes, mientras que screen me da todo incluyendo la barra de status
+  const screen = Dimensions.get("screen");
   const live = useWindowDimensions(); // referencia en vivo para comparar (ejercicio 02)
 
   return (
